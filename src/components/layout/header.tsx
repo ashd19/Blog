@@ -43,7 +43,7 @@ import { useRouter } from "next/navigation";
     </div>
     {/* placeholder for theme toggle  */}
     <div className="flex items-center gap-2">
-        <Button  onClick={()=>{router.push('/auth')}}>
+        <Button className="cursor-pointer"  onClick={()=>{router.push('/auth')}}>
     Login/Singup
         </Button>
 
