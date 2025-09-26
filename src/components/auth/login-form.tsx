@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
+import { Button } from '../ui/button'
 
 
 const loginSchema = z.object(
@@ -19,7 +20,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 const LoginForm = () => {
   
-  const[isLoading , setIsLoading] = useState(false);
+  const[isloading , setisloading] = useState(false);
 
   // initialize form 
   const form = useForm<LoginFormValues>(
@@ -66,6 +67,11 @@ const LoginForm = () => {
           </FormItem>
     )}
     />
+     <Button  type='submit' className='w-full' disabled={isloading}>
+                       {
+                        isloading ? "Logging in " : "Log in "
+                       }
+                        </Button>
     </form>
 
   </Form>
