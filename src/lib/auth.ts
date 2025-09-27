@@ -29,7 +29,7 @@ export const  auth  = betterAuth(
                 httpOnly:true,
                 secure:process.env.NODE_ENV === "production",
             }
-
+                
         }
     
         
