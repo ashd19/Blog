@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 
 const loginSchema = z.object(
@@ -25,20 +26,36 @@ const LoginForm = () => {
   // initialize form 
   const form = useForm<LoginFormValues>(
     {
+      resolver:zodResolver(loginSchema),
       defaultValues:{
         email:'',
         password:'',
         
       }
     }
-  )
-  
+  ) 
+
+
+   
+  const onSubmit = async(values : LoginFormValues) => {
+    setisloading(true)
+    console.log(values)
+    try{
+      console.log(values);
+    }
+    catch(e){
+       
+    }
+
+  }
+
+
   return (
     
       // {/* ... form ???? many children ...??  */}
      <div>
          <Form  {...form} >
-      <form className='space-y-4'>
+      <form   onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
     <FormField 
     control = {form.control}
     name='email'
@@ -51,6 +68,7 @@ const LoginForm = () => {
               <FormControl> 
               <Input placeholder='Enter your email '  {...field}/>
               </FormControl>
+              <FormMessage/>
           </FormItem>
     )}
     /> <FormField 
@@ -64,10 +82,11 @@ const LoginForm = () => {
         <FormControl> 
       <Input placeholder='Enter your password ' type='password'  {...field}/>
         </FormControl>
+        <FormMessage/>
           </FormItem>
     )}
     />
-     <Button  type='submit' className='w-full' disabled={isloading}>
+     <Button  type='submit'  className='w-full' disabled={isloading}>
                        {
                         isloading ? "Logging in " : "Log in "
                        }

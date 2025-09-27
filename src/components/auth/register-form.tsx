@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm , Resolver} from 'react-hook-form';
 import { z } from 'zod'
-import { FormControl, FormField, FormItem, FormLabel, Form } from '../ui/form';
+import { FormControl, FormField, FormItem, FormLabel, Form, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { password } from 'bun';
@@ -40,16 +40,25 @@ function RegisterForm() {
 }
     )
   
-
-    const onSubmit = ()=>{
-          
+  const onSubmit = async(values : RegisterFormValues) => {
+    setisLoading(true)
+    console.log(values)
+    try{
+      console.log(values);
     }
+    catch(e){
+       
+    }
+
+  }
 
     return (  
         <div>
             {/* form is from the ui lib not hooks !!  */}
             <Form   {...form}> 
-                <form  className='space-y-4'>
+                <form 
+                onSubmit={form.handleSubmit(onSubmit)}
+                className='space-y-4'>
                     <FormField
                     control={form.control}
                     name = "name"
@@ -61,6 +70,7 @@ function RegisterForm() {
                             <FormControl>
                                 <Input placeholder='Enter your name' {...field}/>
                             </FormControl>
+                            <FormMessage/>
                     </FormItem>
                     )}
                     >
@@ -70,11 +80,12 @@ function RegisterForm() {
                     render = {({field})=>(
                     <FormItem>
                         <FormLabel>
-                            Name
+                            email
                         </FormLabel>
                             <FormControl>
                                 <Input placeholder='Enter your email' type='email' {...field}/>
                             </FormControl>
+                            <FormMessage/>
                     </FormItem>
                     )}
                     >
@@ -84,11 +95,12 @@ function RegisterForm() {
                     render = {({field})=>(
                     <FormItem>
                         <FormLabel>
-                            Name
+                            Password
                         </FormLabel>
                             <FormControl>
                                 <Input placeholder='Enter your password' type='password' {...field}/>
                             </FormControl>
+                            <FormMessage/>
                     </FormItem>
                     )}
                     >
@@ -98,16 +110,17 @@ function RegisterForm() {
                     render = {({field})=>(
                     <FormItem>
                         <FormLabel>
-                            Name
+                            Confirm Password 
                         </FormLabel>
                             <FormControl>
                                 <Input placeholder='Enter your password again' type='password' {...field}/>
                             </FormControl>
+                            <FormMessage/>
                     </FormItem>
                     )}
                     >
                     </FormField>
-                    <Button  type='submit' onClick={onSubmit} className='w-full' disabled={isloading}>
+                    <Button  type='submit' className='w-full' disabled={isloading}>
                    {
                     isloading ? "Creating Account" : "Create Account"
                    }
