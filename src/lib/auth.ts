@@ -1,12 +1,24 @@
 // email pass via better auth 
 import {betterAuth} from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "./db";
+import { schema } from "./db/schema";
 
 export const  auth  = betterAuth(
     {
         appName:'Blog-App',
         secret:process.env.BETTER_AUTH_SECRET || '' ,
         baseURL:process.env.BASE_URL,
-        emailAndPassword: {
+        database:drizzleAdapter(db,{
+            provider:'pg',
+            schema:{
+                ...schema,
+                user:schema.users,
+                session:schema.sessions,
+                account:schema.accounts,
+            }
+        }),    
+        emailAndPassword: { 
 		enabled: true,
 		disableSignUp: false,
 		requireEmailVerification: true,
