@@ -45,7 +45,7 @@ function Header() {
           <div className="flex items-center gap-2">
             {/* isPending is from the useSession -> it returns a value */}
             {isPending ? null : session?.user ? (
-              <UserMenu />
+              <UserMenu user={session?.user}/>
             ) : (
               <Button
                 className="cursor-pointer"

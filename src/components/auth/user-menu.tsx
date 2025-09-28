@@ -1,10 +1,83 @@
-import React from 'react'
+"use client";
+import {
+  DropdownMenu,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import React, { useState } from "react";
+import { Button } from "../ui/button";
+import { Avatar } from "../ui/avatar";
+import { AvatarFallback } from "@radix-ui/react-avatar";
+import { User } from "better-auth";
+import { DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
+import { LogOut, PenSquare, UserIcon } from "lucide-react";
+import Link from "next/link";
 
-
-const UserMenu = () => {
-  return (
-    <div>UserMenu</div>
-  )
+interface UserMenuProps {
+  user: User;
 }
 
-export default UserMenu
+const getInitials = (name: string) => {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+};
+
+const UserMenu = ({ user }: UserMenuProps) => {
+  const [isloading, setisloading] = useState<boolean>(); // what should be the default value ? 
+  
+  const handleLogout = async () => {
+    setisloading(true);
+  };
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant={"ghost"} className="relative h-8 w-8 rounded-full">
+          <Avatar>
+            <AvatarFallback className="h-8 w-8">
+              {getInitials(user?.name) || "User"}
+            </AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <div className="flex items-center justify-start gap-2 p-2">
+          <div className="flex flex-col space-y-1 leading-none">
+            <p className="font-bold">{user.name}</p>
+            <p className="text-sm text-muted-foreground">{user?.email}</p>
+          </div>
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="cursor-pointer" asChild>
+          <Link href="/profile">
+            <UserIcon className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="cursor-pointer" asChild>
+          <Link href="/post/create">
+            <PenSquare className="mr-2 h-4 w-4" />
+            <span>Create Post</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={handleLogout}
+          disabled={isloading}
+          className="cursor-pointer"
+          asChild
+        >
+          <Link href="/post/create">
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>{isloading ? "Logging out" : "Logout"}</span>
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+export default UserMenu;
