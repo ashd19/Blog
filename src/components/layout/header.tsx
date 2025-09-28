@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
-import { toast } from "sonner";
+import {  useSession } from "@/lib/auth-client";
+import UserMenu from "../auth/user-menu";
 
 function Header() {
   const router = useRouter();
-
+  const { data: session, isPending } = useSession();
   const navItems = [
     {
       id: 1,
@@ -21,22 +21,6 @@ function Header() {
       href: "/about",
     },
   ];
-
-  const handleLogout = async () => {
-    try {
-      await authClient.signOut({
-        fetchOptions: {
-          onSuccess: () => {
-            router.push("/auth"); // redirect to login page
-          },
-        },
-      });
-      toast("logged out successfully ! ");
-    } catch (e) {
-      console.log("Error : ", e);
-      toast("error while logging out ");
-    }
-  };
 
   return (
     <header className="border-b bg-background sticky top-0 z-10 ">
@@ -59,17 +43,19 @@ function Header() {
           </div>
           {/* placeholder for theme toggle  */}
           <div className="flex items-center gap-2">
-            <Button
-              className="cursor-pointer"
-              onClick={() => {
-                router.push("/auth");
-              }}
-            >
-              Login/Singup
-            </Button>
-            <Button className="cursor-pointer" onClick={handleLogout}>
-              Logout
-            </Button>
+            {/* isPending is from the useSession -> it returns a value */}
+            {isPending ? null : session?.user ? (
+              <UserMenu />
+            ) : (
+              <Button
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push("/auth");
+                }}
+              >
+                Login/Singup
+              </Button>
+            )}
           </div>
         </div>
       </div>
