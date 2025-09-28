@@ -66,6 +66,7 @@ function RegisterForm({ onSuccess }: RegisterFormProps) {
 
       if (onSuccess) {
         onSuccess(); // it is a type of funtion which returns void
+        toast("Account created successfully, Please login!");
         console.log({
           name: values.name,
           email: values.email,
