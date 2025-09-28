@@ -57,13 +57,20 @@ function RegisterForm({ onSuccess }: RegisterFormProps) {
         email: values.email,
         password: values.password,
       });
+
       if (error) {
         toast("Failed to create account , Please try again.\n");
+        console.log(error);
         return;
       }
 
       if (onSuccess) {
         onSuccess(); // it is a type of funtion which returns void
+        console.log({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        });
       }
     } catch (e: unknown) {
       console.log("error : ", e);
