@@ -1,14 +1,21 @@
 "use client";
 
-import Link from "next/link";
+import { Moon, Sun } from "lucide-react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import {  useSession } from "@/lib/auth-client";
+import { useSession } from "@/lib/auth-client";
 import UserMenu from "../auth/user-menu";
+import Link from "next/link";
+import { useTheme } from "next-themes";
 
 function Header() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
+  const { theme, setTheme } = useTheme(); // true -> light , false -> dark , we are given useTheme hook from next/themes READ DOCS !
+  const themeHandler = () => {
+    // we have to toggle here
+    setTheme(theme === "light" ? "dark" : "light");
+  };
   const navItems = [
     {
       id: 1,
@@ -41,11 +48,17 @@ function Header() {
           <div className="hidden md:block">
             {/* keep placeholder  for search  */}
           </div>
-          {/* placeholder for theme toggle  */}
+          {/* placeholder for theme toggle , see moon  during dark... */}
+          <div>
+            <Button variant={"ghost"} onClick={themeHandler}>
+              {/* reactive ! */}
+              {theme === "light" ? <Moon /> : <Sun />}
+            </Button>
+          </div>
           <div className="flex items-center gap-2">
             {/* isPending is from the useSession -> it returns a value */}
             {isPending ? null : session?.user ? (
-              <UserMenu user={session?.user}/>
+              <UserMenu user={session?.user} />
             ) : (
               <Button
                 className="cursor-pointer"

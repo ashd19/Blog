@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import Header from "@/components/layout/header";
-import { Toaster } from "@/components/ui/sonner"
-
+import { Toaster } from "@/components/ui/sonner";
+import { DarkMode } from "@/components/theme/dark-mode-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,18 +30,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider 
-  attribute={'class'}
-  defaultTheme="system"
-  enableSystem
-
-  disableTransitionOnChange
->
- 
-          {children}
-          
+        <ThemeProvider
+          attribute={"class"}
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {" "}
+          <DarkMode
+            attribute={"class"}
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </DarkMode>
         </ThemeProvider>
-        <Toaster/>
+        <Toaster />
       </body>
     </html>
   );

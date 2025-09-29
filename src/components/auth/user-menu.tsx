@@ -10,7 +10,7 @@ import { Avatar } from "../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { User } from "better-auth";
 import { DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
-import { LogOut, PenSquare,  UserIcon } from "lucide-react";
+import { LogOut, PenSquare, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { signOut } from "@/lib/auth-client";
 import { toast } from "sonner";
@@ -38,13 +38,13 @@ const UserMenu = ({ user }: UserMenuProps) => {
         fetchOptions: {
           onSuccess: () => {
             toast("You have been logged out successfully!");
-            router.refresh() // not hard refresh of the whole page 
-          }, 
+            router.refresh(); // not hard refresh of the whole page
+          },
         },
       });
     } catch (e) {
       console.log("Error : ", e);
-      toast("Failed to logout!")
+      toast("Failed to logout!");
     } finally {
       setisloading(false);
     }
@@ -53,10 +53,12 @@ const UserMenu = ({ user }: UserMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"} className="relative h-8 w-8 rounded-full">
+        <Button variant={"ghost"} className="relative h-10 w-10 rounded-full">
           <Avatar>
-            <AvatarFallback className="h-8 w-8">
-              {getInitials(user?.name) || "User"}
+            <AvatarFallback className="h-12 w-12">
+              <h1 className="font-extrabold text-2xl">
+                {getInitials(user?.name) || "User"}
+              </h1>
             </AvatarFallback>
           </Avatar>
         </Button>
