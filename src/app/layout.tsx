@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { DarkMode } from "@/components/theme/dark-mode-provider";
+import Chatbot from "@/components/ui/chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Chatbot />
           </DarkMode>
         </ThemeProvider>
         <Toaster />
