@@ -10,8 +10,11 @@ import { Avatar } from "../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { User } from "better-auth";
 import { DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
-import { LogOut, PenSquare, UserIcon } from "lucide-react";
+import { LogOut, PenSquare,  UserIcon } from "lucide-react";
 import Link from "next/link";
+import { signOut } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
   user: User;
@@ -26,11 +29,27 @@ const getInitials = (name: string) => {
 };
 
 const UserMenu = ({ user }: UserMenuProps) => {
-  const [isloading, setisloading] = useState<boolean>(); // what should be the default value ? 
-  
+  const [isloading, setisloading] = useState<boolean>(); // what should be the default value ?
+  const router = useRouter();
   const handleLogout = async () => {
     setisloading(true);
+    try {
+      await signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            toast("You have been logged out successfully!");
+            router.refresh() // not hard refresh of the whole page 
+          }, 
+        },
+      });
+    } catch (e) {
+      console.log("Error : ", e);
+      toast("Failed to logout!")
+    } finally {
+      setisloading(false);
+    }
   };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
