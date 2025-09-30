@@ -55,13 +55,9 @@ function PostForm() {
             placeholder="Enter post title"
             {...register("title")}
             disabled={isPending}
-            aria-invalid={!!errors.title}
-            aria-describedby={errors.title ? "title-error" : undefined}
           />
-          {errors.title?.message && (
-            <p id="title-error" className="mt-1 text-sm text-red-600">
-              {String(errors.title.message)}
-            </p>
+          {errors?.title && (
+            <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
           )}
         </div>{" "}
         <div className="space-y-6">
@@ -72,17 +68,13 @@ function PostForm() {
             placeholder="Enter short  post description"
             {...register("description")}
             disabled={isPending}
-            aria-invalid={!!errors.description}
-            aria-describedby={
-              errors.description ? "description-error" : undefined
-            }
           />
-          {errors.description?.message && (
-            <p id="description-error" className="mt-1 text-sm text-red-600">
-              {String(errors.description.message)}
-            </p>
-          )}
         </div>
+        {errors?.description && (
+          <p className="mt-1 text-sm text-red-600">
+            {errors.description.message}
+          </p>
+        )}
         <div className="space-y-6">
           <Label htmlFor="content">Content</Label>
           <Textarea
@@ -91,15 +83,11 @@ function PostForm() {
             placeholder="Enter the content"
             {...register("content")}
             disabled={isPending}
-            aria-invalid={!!errors.content}
-            aria-describedby={errors.content ? "content-error" : undefined}
           />
-          {errors.content?.message && (
-            <p id="content-error" className="mt-1 text-sm text-red-600">
-              {String(errors.content.message)}
-            </p>
-          )}
         </div>
+        {errors?.content && (
+          <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
+        )}
         <Button type="submit" disabled={isPending} className="mt-5 w-full">
           {isPending ? "Creating  Post ..." : "Create Post"}
         </Button>
