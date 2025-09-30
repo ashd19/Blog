@@ -26,7 +26,6 @@ function PostForm() {
     content: z.string().min(3, "Content should be atleast 3 characters long"),
   });
   type PostFormValues = z.infer<typeof postSchema>;
-
   const {
     register,
     handleSubmit,
@@ -42,7 +41,7 @@ function PostForm() {
   });
   // handlesSubmit is  provided by react-hook-form !
   const onFormSubmit = async (data: PostFormValues) => {
-    console.log(data);
+     
   };
 
   return (

@@ -1,7 +1,7 @@
 
-type Props = {}
 
-const page = (props: Props) => {
+
+const page = () => {
   return (
     <div className='flex justify-center items-center'> 
   
