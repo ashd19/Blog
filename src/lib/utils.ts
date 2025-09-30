@@ -6,6 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function slugify(text: string) {
-  return text.toLowerCase().replace(/[^W]+/g, "").replace(/ +/g, "-");
-  // converts next js to next-js  ( user might type something like this so we take care of it,)
+  return text
+    .toLowerCase()
+    .replace(/[^\\w]+/g, "") // Remove non-word characters
+    .replace(/ +/g, "-"); // Replace spaces with hyphens
 }

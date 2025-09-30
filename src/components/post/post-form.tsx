@@ -8,10 +8,13 @@ import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
+import { createPost } from "@/actions/post-actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 function PostForm() {
   const [isPending, startTransition] = useTransition();
-
+  const router = useRouter();
   // check posts db schema for elements ..
   // post form schema for  validation
   const postSchema = z.object({
@@ -41,7 +44,26 @@ function PostForm() {
   });
   // handlesSubmit is  provided by react-hook-form !
   const onFormSubmit = async (data: PostFormValues) => {
-     
+    startTransition(async () => {
+      try {
+        //  Where will the backend get the data from ?
+        const formData = new FormData();
+        formData.append("title", data.title);
+        formData.append("description", data.description);
+        formData.append("content", data.content);
+
+        const res = await createPost(formData);
+        console.log(res);
+        if (res.success) {
+          toast.success("Post created successfully!");
+          router.refresh();
+          router.push("/");
+        }
+      } catch (e) {
+        console.log(e);
+        toast.error("Unable to create post. Please try again.");
+      }
+    });
   };
 
   return (

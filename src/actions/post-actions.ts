@@ -29,7 +29,7 @@ export async function createPost(formdata: FormData) {
 
     // create the slug  from title
     const slug = slugify(title);
-
+    console.log(slug);
     const existingPost = await db.query.posts.findFirst({
       where: eq(posts.slug, slug),
     });
@@ -41,6 +41,7 @@ export async function createPost(formdata: FormData) {
           "A post with this title already exists. Please choose another title.",
       };
     }
+    // get data form frontend to post to db 
     const [newPost] = await db
       .insert(posts)
       .values({

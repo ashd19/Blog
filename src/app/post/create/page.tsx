@@ -2,6 +2,7 @@ import PostForm from "@/components/post/post-form";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 function CreatePost() {
+
   return (
     <div>
       <main className="py-10">
