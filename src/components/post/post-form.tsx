@@ -58,10 +58,11 @@ function PostForm() {
           toast.success("Post created successfully!");
           router.refresh();
           router.push("/");
+        } else {
+          toast.error("Unable to create post. Please try again.");
         }
       } catch (e) {
         console.log(e);
-        toast.error("Unable to create post. Please try again.");
       }
     });
   };

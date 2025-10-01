@@ -7,6 +7,7 @@ import { slugify } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
+import { toast } from "sonner";
 
 export async function createPost(formdata: FormData) {
   try {
@@ -41,7 +42,7 @@ export async function createPost(formdata: FormData) {
           "A post with this title already exists. Please choose another title.",
       };
     }
-    // get data form frontend to post to db 
+    // get data form frontend to post to db
     const [newPost] = await db
       .insert(posts)
       .values({
@@ -65,7 +66,7 @@ export async function createPost(formdata: FormData) {
     };
   } catch (error) {
     return {
-      success: true,
+      success: false,
       message: "Failed to create the post. Please try again.",
     };
   }
