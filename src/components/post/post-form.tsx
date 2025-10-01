@@ -59,7 +59,7 @@ function PostForm() {
           router.refresh();
           router.push("/");
         } else {
-          toast.error("Unable to create post. Please try again.");
+          toast.error(res.message);
         }
       } catch (e) {
         console.log(e);
