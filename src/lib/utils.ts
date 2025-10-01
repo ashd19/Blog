@@ -8,6 +8,6 @@ export function cn(...inputs: ClassValue[]) {
 export function slugify(text: string) {
   return text
     .toLowerCase()
-    .replace(/[^\\w]+/g, "") // Remove non-word characters
-    .replace(/ +/g, "-"); // Replace spaces with hyphens
+    .replace(/[^a-z0-9]+/g, "")
+    .replace(/ +/g, "-");
 }
