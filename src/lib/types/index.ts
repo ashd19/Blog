@@ -11,8 +11,7 @@ export interface PostListProps {
   }>;
 }
 
-
-// think of this like a singular post item
+// think of this like a singuSlar post item
 
 export interface PostCardProps {
   postcard: {
@@ -25,4 +24,19 @@ export interface PostCardProps {
       name: string;
     };
   };
+}
+export interface PostContentProps {
+  posts: {
+    id: number;
+    content: string;
+    title: string;
+    description: string;
+    slug: string;
+    createdAt: Date;
+    updatedAt: Date;
+    author: {
+      name: string;
+    };
+  };
+  isAuthor: boolean; // used  , thus
 }
