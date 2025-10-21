@@ -17,8 +17,9 @@ export function formatDate(date: Date) {
     month: "long",
     day: "numeric",
     year: "numeric",
-    
   }).format(date);
 }
 
-export function formatDateInS
+export function formatDateInSec(date: Date) {
+  return date.toISOString().replace("T", " ").slice(0, 19);
+}

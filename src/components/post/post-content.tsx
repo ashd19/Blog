@@ -1,5 +1,5 @@
 import { PostContentProps } from "@/lib/types";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatDateInSec } from "@/lib/utils";
 import { User } from "lucide-react";
 
 function PostContent({ posts, isAuthor }: PostContentProps) {
@@ -17,7 +17,7 @@ function PostContent({ posts, isAuthor }: PostContentProps) {
             {posts.author?.name ?? "Unknown"}
           </span>
           <span className="opacity-60">•</span>
-          <span>{formatDate(posts.updatedAt)} </span>
+          <span>{formatDateInSec(posts.updatedAt)} </span>
           {isAuthor && (
             <span className="ml-2 px-2 py-0.5 rounded bg-primary text-primary-foreground text-xs font-semibold shadow">
               You
