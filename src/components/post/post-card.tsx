@@ -1,5 +1,5 @@
 import { PostCardProps } from "@/lib/types";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 
@@ -14,6 +14,9 @@ function PostCard({ postcard }: PostCardProps) {
           By {postcard.author.name} - {formatDate(postcard.createdAt)}
         </CardDescription>
       </CardHeader>
+      <CardContent >
+        <p className="text-muted-foreground">{postcard.description}</p>
+      </CardContent>
     </Card>
   );
 }

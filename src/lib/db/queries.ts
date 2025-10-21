@@ -16,8 +16,20 @@ export async function getAllPosts() {
     return getAllPosts;
   } catch (error) {
     console.log(error);
+    return [];
   }
 }
 
 // get post by slug
-
+export async function getPostBySlug(slug: string) {
+  try {
+    const getPostBySlug = await db.query.posts.findFirst({
+      where: eq(posts.slug, slug),
+      with: { author: true },
+    });
+    return getPostBySlug;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
