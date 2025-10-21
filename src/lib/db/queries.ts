@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from ".";
 import { posts } from "./schema";
 
@@ -18,3 +18,6 @@ export async function getAllPosts() {
     console.log(error);
   }
 }
+
+// get post by slug
+

@@ -33,7 +33,7 @@ const page = async () => {
       name: post.author?.name ?? "Unknown",
     },
   }));
-  
+
   return (
     <main className="py-10">
       <div className="max-w-7-xl mx-auto px-4">
@@ -43,7 +43,8 @@ const page = async () => {
             <h2 className="text-xl font-medium">No Posts Yet</h2>
           </div>
         ) : (
-          <PostList posts={posts} postcard={postcard} />
+          <PostList posts={posts} />
+          // <PostList posts={posts} postcard={postcard} />
         )}
       </div>
     </main>

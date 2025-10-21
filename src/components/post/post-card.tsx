@@ -1,5 +1,5 @@
 import { PostCardProps } from "@/lib/types";
-import { Card, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Link from "next/link";
 
 function PostCard({ postcard }: PostCardProps) {
@@ -7,8 +7,11 @@ function PostCard({ postcard }: PostCardProps) {
     <Card className="h-full flex flex-col">
       <CardHeader>
         <Link className="hover:underline" href={`/post/${postcard.slug}`}>
-          <CardTitle className="text-3xl">{postcard.title}</CardTitle>
+          <CardTitle className="text-2xl">{postcard.title}</CardTitle>
         </Link>
+        <CardDescription>
+            By - {postcard.author.name}
+        </CardDescription>
       </CardHeader>
     </Card>
   );

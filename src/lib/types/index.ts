@@ -9,9 +9,13 @@ export interface PostListProps {
       name: string;
     };
   }>;
-} 
+}
+
+
+// think of this like a singular post item
+
 export interface PostCardProps {
-  postcard: { 
+  postcard: {
     id: number;
     title: string;
     description: string;
@@ -20,5 +24,5 @@ export interface PostCardProps {
     author: {
       name: string;
     };
-  }
+  };
 }
