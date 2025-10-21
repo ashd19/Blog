@@ -1,6 +1,7 @@
 import { PostCardProps } from "@/lib/types";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Link from "next/link";
+import { formatDate } from "@/lib/utils";
 
 function PostCard({ postcard }: PostCardProps) {
   return (
@@ -10,7 +11,7 @@ function PostCard({ postcard }: PostCardProps) {
           <CardTitle className="text-2xl">{postcard.title}</CardTitle>
         </Link>
         <CardDescription>
-            By - {postcard.author.name}
+          By {postcard.author.name} - {formatDate(postcard.createdAt)}
         </CardDescription>
       </CardHeader>
     </Card>
