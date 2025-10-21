@@ -198,7 +198,6 @@ const Chatbot: React.FC = () => {
     setIsTyping(true);
 
     try {
-      // Get AI response
       const botResponse = await aiService.current.getResponse(currentInput);
 
       const botMessage: Message = {
@@ -234,11 +233,11 @@ const Chatbot: React.FC = () => {
     <div className="fixed bottom-6 right-6 z-50">
       {/* Chat Window */}
       {isOpen && (
-        <div className="mb-4 w-[28rem] h-[34rem] bg-white rounded-2xl shadow-2xl border-2 border-blue-300 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
+        <div className="mb-4 w-[28rem] h-[34rem] bg-background rounded-2xl shadow-lg border border-border flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 flex items-center justify-between shadow-lg">
+          <div className="bg-muted text-foreground p-4 flex items-center justify-between shadow-sm border-b border-border">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center border border-white/30">
+              <div className="w-8 h-8 bg-muted-foreground/10 rounded-full flex items-center justify-center border border-border">
                 <BookOpen size={16} />
               </div>
               <div>
@@ -248,14 +247,14 @@ const Chatbot: React.FC = () => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors"
             >
               <X size={20} />
             </button>
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gradient-to-b from-blue-50 to-white">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-background">
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -273,8 +272,8 @@ const Chatbot: React.FC = () => {
                   <div
                     className={`w-6 h-6 rounded-full flex items-center justify-center text-xs ${
                       message.sender === "user"
-                        ? "bg-blue-600 text-white shadow-sm"
-                        : "bg-indigo-300 text-gray-600"
+                        ? "bg-primary text-primary-foreground shadow-sm"
+                        : "bg-muted text-muted-foreground"
                     }`}
                   >
                     {message.sender === "user" ? (
@@ -286,8 +285,8 @@ const Chatbot: React.FC = () => {
                   <div
                     className={`px-3 py-2 rounded-lg text-sm ${
                       message.sender === "user"
-                        ? "bg-blue-600 text-white rounded-br-sm shadow-sm"
-                        : "bg-white text-gray-800 rounded-bl-sm shadow-sm border border-blue-100"
+                        ? "bg-primary text-primary-foreground rounded-br-sm shadow-sm"
+                        : "bg-neutral-800 text-white rounded-bl-sm shadow-sm border border-border"
                     }`}
                   >
                     {message.text}
@@ -300,18 +299,18 @@ const Chatbot: React.FC = () => {
             {isTyping && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-2 max-w-xs">
-                  <div className="w-6 h-6 bg-indigo-300 rounded-full flex items-center justify-center text-xs text-gray-600">
+                  <div className="w-6 h-6 bg-muted text-muted-foreground rounded-full flex items-center justify-center text-xs">
                     <Edit size={12} />
                   </div>
-                  <div className="bg-white px-3 py-2 rounded-lg rounded-bl-sm shadow-sm border border-blue-100">
+                  <div className="bg-muted px-3 py-2 rounded-lg rounded-bl-sm shadow-sm border border-border">
                     <div className="flex space-x-1">
-                      <div className="w-1 h-1 bg-blue-500 rounded-full animate-bounce"></div>
+                      <div className="w-1 h-1 bg-primary rounded-full animate-bounce"></div>
                       <div
-                        className="w-1 h-1 bg-blue-500 rounded-full animate-bounce"
+                        className="w-1 h-1 bg-primary rounded-full animate-bounce"
                         style={{ animationDelay: "0.1s" }}
                       ></div>
                       <div
-                        className="w-1 h-1 bg-blue-500 rounded-full animate-bounce"
+                        className="w-1 h-1 bg-primary rounded-full animate-bounce"
                         style={{ animationDelay: "0.2s" }}
                       ></div>
                     </div>
@@ -323,7 +322,7 @@ const Chatbot: React.FC = () => {
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-blue-200 p-3 bg-white">
+          <div className="border-t border-border p-3 bg-background">
             <div className="flex items-center space-x-2">
               <input
                 type="text"
@@ -331,12 +330,12 @@ const Chatbot: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about blogging, SEO, or writing..."
-                className="flex-1 px-3 py-2 border border-blue-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-3 py-2 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background"
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim()}
-                className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-sm"
+                className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed shadow-sm"
               >
                 <Send size={14} />
               </button>
@@ -350,8 +349,8 @@ const Chatbot: React.FC = () => {
         onClick={() => setIsOpen(!isOpen)}
         className={`w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-white transition-all duration-300 transform hover:scale-110 ${
           isOpen
-            ? "bg-red-500 hover:bg-red-600 rotate-0"
-            : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 border-2 border-blue-300"
+            ? "bg-destructive hover:bg-destructive/90 rotate-0"
+            : "bg-black hover:bg-neutral-900 border border-border"
         }`}
       >
         {isOpen ? <X size={50} /> : <Bot size={40} />}
