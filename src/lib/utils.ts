@@ -17,5 +17,8 @@ export function formatDate(date: Date) {
     month: "long",
     day: "numeric",
     year: "numeric",
+    
   }).format(date);
 }
+
+export function formatDateInS
