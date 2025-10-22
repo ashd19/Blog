@@ -40,3 +40,15 @@ export interface PostContentProps {
   };
   isAuthor: boolean; // used  , thus
 }
+
+export interface PostFormProps {
+  isEditing?: boolean;
+  post?: {
+    id: number;
+    title: string;
+    content:string;
+    description: string;
+    slug: string;
+    
+  };
+}

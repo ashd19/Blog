@@ -12,7 +12,9 @@ import { createPost } from "@/actions/post-actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-function PostForm() {
+import { PostFormProps } from "@/lib/types/index";
+
+function PostForm({ isEditing, post }: PostFormProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   // check posts db schema for elements ..
@@ -36,11 +38,18 @@ function PostForm() {
   } = useForm<PostFormValues>({
     resolver: zodResolver(postSchema),
 
-    defaultValues: {
-      title: "",
-      description: "",
-      content: "",
-    },
+    defaultValues:
+      isEditing && post
+        ? {
+            title: post.title,
+            description: post.description,
+            content: post.content,
+          }
+        : {
+            title: "",
+            description: "",
+            content: "",
+          },
   });
   // handlesSubmit is  provided by react-hook-form !
   const onFormSubmit = async (data: PostFormValues) => {
@@ -111,7 +120,7 @@ function PostForm() {
           <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
         )}
         <Button type="submit" disabled={isPending} className="mt-5 w-full">
-          {isPending ? "Creating  Post ..." : "Create Post"}
+          {isEditing ? "Edit  Post " : "Create Post"}
         </Button>
       </form>
     </div>

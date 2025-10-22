@@ -27,16 +27,16 @@ const page = async () => {
     })) ?? [];
   // const posts = await getAllPosts();
 
-  const postcard = rawPosts?.map((post) => ({
-    id: post.id,
-    title: post.title,
-    description: post.description,
-    slug: post.slug,
-    createdAt: post.createdAt,
-    author: {
-      name: post.author?.name ?? "Unknown",
-    },
-  }));
+  // const postcard = rawPosts?.map((post) => ({
+  //   id: post.id,
+  //   title: post.title,
+  //   description: post.description,
+  //   slug: post.slug,
+  //   createdAt: post.createdAt,
+  //   author: {
+  //     name: post.author?.name ?? "Unknown",
+  //   },
+  // }));
   return (
     <main className="py-10">
       <div className="max-w-7-xl mx-auto px-4">
