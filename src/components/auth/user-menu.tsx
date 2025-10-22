@@ -38,6 +38,7 @@ const UserMenu = ({ user }: UserMenuProps) => {
         fetchOptions: {
           onSuccess: () => {
             toast("You have been logged out successfully!");
+            router.push("/");
             router.refresh(); // not hard refresh of the whole page
           },
         },

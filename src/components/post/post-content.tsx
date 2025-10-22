@@ -54,7 +54,10 @@ function PostContent({ posts, isAuthor }: PostContentProps) {
       <div className="flex mt-5 gap-5">
         {isAuthor ? (
           <>
-            <Button variant={"outline"}>
+            <Button
+              variant={"outline"}
+              onClick={() => router.push(`edit/${posts.slug}`)}
+            >
               Edit <SquarePen />
             </Button>
             <Button
