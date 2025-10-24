@@ -18,16 +18,26 @@ function Header() {
   };
   const navItems = [
     {
-      id: 1,
+      id: 2,
       title: "Create Post",
       href: "/post/create",
     },
     {
-      id: 2,
+      id: 3,
       title: "About Us",
       href: "/about",
     },
+    {
+      id: 1,
+      title: "Explore",
+      href: "/explore",
+    },
   ];
+
+  //sort navItems based on id
+  navItems.sort((a, b) => a.id - b.id);
+  // why a-b -> ascending order
+  // example : a=3 , b=2 -> 3-2 = positive -> b comes first
 
   return (
     <header className="border-b bg-background sticky top-0 z-10 ">

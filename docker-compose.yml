@@ -2,7 +2,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16
-    container_name: my_postgres_db
+    container_name: blog
     restart: always
     environment:
       POSTGRES_USER: ashton

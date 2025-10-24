@@ -88,8 +88,8 @@ export async function updatePost(postId: number, formdata: FormData) {
     }
     // get form data
     const title = formdata.get("title") as string;
-    const description = formdata.get("description") as string;
-    const content = formdata.get("content") as string;
+    // const description = formdata.get("description") as string;
+    // const content = formdata.get("content") as string;
 
     // create the slug  from title
     const slug = slugify(title);
