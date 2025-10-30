@@ -6,18 +6,30 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { deletePost } from "@/actions/post-actions";
 
 function PostContent({ posts, isAuthor }: PostContentProps) {
   const [showConfirm, setShowConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
-    // TODO: Add your delete logic here (API call, etc.)
-    // After deletion, you might want to redirect to the homepage or posts list
-    router.push("/");
-    toast.success("Post deleted successfully!", {
-      position: "top-center",
-    });
+    setDeleting(true);
+    try {
+      const res = await deletePost(posts.id);
+      if (res?.success) {
+        setShowConfirm(false);
+        toast.success("Post deleted successfully!", { position: "top-center" });
+        router.push("/");
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (e) {
+      toast.error("Unable to delete post.");
+      console.error(e);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   return (
@@ -54,10 +66,7 @@ function PostContent({ posts, isAuthor }: PostContentProps) {
       <div className="flex mt-5 gap-5">
         {isAuthor ? (
           <>
-            <Button
-              variant={"outline"}
-              onClick={() => router.push(`edit/${posts.slug}`)}
-            >
+            <Button variant={"outline"} onClick={() => router.push(`/explore`)}>
               Edit <SquarePen />
             </Button>
             <Button
@@ -88,15 +97,18 @@ function PostContent({ posts, isAuthor }: PostContentProps) {
             <div className="flex gap-4 mt-2">
               <Button
                 variant="outline"
-                onClick={() => {
-                  setShowConfirm(false);
-                  router.push(`/post/${posts.slug}`);
-                }}
+                onClick={() => setShowConfirm(false)}
+                disabled={deleting}
               >
                 Cancel <XCircle className="ml-1" size={18} />
               </Button>
-              <Button variant="destructive" onClick={handleDelete}>
-                Delete <CheckCircle className="ml-1" size={18} />
+              <Button
+                variant="destructive"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {!deleting ? "Delete" : "Deleting"}
+                <CheckCircle className="ml-1" size={18} />
               </Button>
             </div>
           </div>
