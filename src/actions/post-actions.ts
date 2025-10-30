@@ -133,9 +133,29 @@ export async function deletePost(postId: number) {
       return {
         redirect: "/auth",
         success: "false",
-        message: "You must be logged in to create a post ",
+        message: "You must be logged in to delete  a post ",
       };
     }
+    const postToDelete = await db.query.posts.findFirst({
+      where: eq(posts.id, postId),
+    });
+    if (!postToDelete) {
+      return {
+        success: false,
+        message: "Post does not exist.",
+      };
+    }
+
+    if (session?.user.id !== postToDelete?.authorId) {
+      return {
+        success: false,
+        message: "You can only delete your own posts.",
+      };
+    }
+    await db.delete(posts).where(eq(posts.id, postId));
+    revalidatePath("/");
+    revalidatePath("/profile");
+    revalidatePath("/explore");
   } catch (e) {
     return {
       error: e,
