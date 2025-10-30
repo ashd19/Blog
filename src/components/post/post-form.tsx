@@ -64,7 +64,11 @@ function PostForm({ isEditing, post }: PostFormProps) {
         const res = await createPost(formData);
         console.log(res);
         if (res.success) {
-          toast.success("Post created successfully!");
+          toast.success(
+            isEditing
+              ? "Post edited successfully"
+              : "Post created successfully!"
+          );
           router.refresh();
           router.push("/");
         } else {

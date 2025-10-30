@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
     // redirect user to auth page since user is not loggedin / authenticated
     return NextResponse.redirect(new URL("/auth", request.url));
    
-    // toast message ???
+   
   }
   // if user is already logged in and is accessingt the auth page /route
   // redirect to homepage

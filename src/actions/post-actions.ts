@@ -7,6 +7,7 @@ import { slugify } from "@/lib/utils";
 import { and, eq, ne } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
+import { fa } from "zod/v4/locales";
 
 export async function createPost(formdata: FormData) {
   try {
@@ -24,8 +25,8 @@ export async function createPost(formdata: FormData) {
 
     //get form data  via their id's
     const title = formdata.get("title") as string;
-    // const description = formdata.get("description") as string;
-    // const content = formdata.get("content") as string;
+    const description = formdata.get("description") as string;
+    const content = formdata.get("content") as string;
 
     // create the slug  from title
     const slug = slugify(title);
@@ -42,16 +43,16 @@ export async function createPost(formdata: FormData) {
       };
     }
     // get data form frontend to post to db
-    // const [newPost] = await db
-    //   .insert(posts)
-    //   .values({
-    //     title,
-    //     description,
-    //     content,
-    //     slug,
-    //     authorId: session.user.id,
-    //   })
-    //   .returning();
+    const [newPost] = await db
+      .insert(posts)
+      .values({
+        title,
+        description,
+        content,
+        slug,
+        authorId: session.user.id,
+      })
+      .returning();
 
     // revalidate the homepage to get the latest posts
     revalidatePath("/");
@@ -98,9 +99,9 @@ export async function updatePost(postId: number, formdata: FormData) {
       where: and(eq(posts.slug, slug), ne(posts.id, postId)),
     });
     const post = await db.query.posts.findFirst({
-      where:eq(posts.id, postId),
-    })
-    if ( post?.authorId !== session.user.id) {
+      where: eq(posts.id, postId),
+    });
+    if (post?.authorId !== session.user.id) {
       return {
         success: false,
         message: "You are not authorized to update this post.",
@@ -118,6 +119,28 @@ export async function updatePost(postId: number, formdata: FormData) {
       error: e,
       success: false,
       message: "Failed to update the post. Please try again.",
+    };
+  }
+}
+
+export async function deletePost(postId: number) {
+  // we have the id , just run a query lol
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    if (!session || !session.user) {
+      return {
+        redirect: "/auth",
+        success: "false",
+        message: "You must be logged in to create a post ",
+      };
+    }
+  } catch (e) {
+    return {
+      error: e,
+      success: false,
+      message: "Failed to delete post.",
     };
   }
 }
